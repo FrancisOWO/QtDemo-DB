@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>617</width>
-    <height>426</height>
+    <width>664</width>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,7 +41,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1" colspan="2">
+   <item row="0" column="1" colspan="3">
     <widget class="QPlainTextEdit" name="ptxtTableName">
      <property name="minimumSize">
       <size>
@@ -68,7 +68,7 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3" colspan="4">
+   <item row="0" column="4" colspan="5">
     <spacer name="horizontalSpacer_3">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -81,7 +81,87 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0" colspan="2">
+   <item row="1" column="2">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>列名</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>值</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>筛选条件：</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="2" colspan="2">
+    <widget class="QPlainTextEdit" name="ptxtItem">
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QPlainTextEdit" name="ptxtValue">
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>30</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="5">
+    <widget class="QPushButton" name="pbtnSelect">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>筛选</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="6" colspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>66</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="8">
+    <widget class="QPushButton" name="pbtnDefault">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>恢复默认</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="2">
     <widget class="QPushButton" name="pbtnAdd">
      <property name="minimumSize">
       <size>
@@ -105,7 +185,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
+   <item row="3" column="2" colspan="2">
     <widget class="QPushButton" name="pbtnDel">
      <property name="minimumSize">
       <size>
@@ -129,7 +209,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="3">
+   <item row="3" column="4">
     <spacer name="horizontalSpacer_4">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -142,7 +222,7 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="4">
+   <item row="3" column="5" colspan="2">
     <widget class="QPushButton" name="pbtnUndo">
      <property name="minimumSize">
       <size>
@@ -166,7 +246,7 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="5">
+   <item row="3" column="7" colspan="2">
     <widget class="QPushButton" name="pbtnSave">
      <property name="minimumSize">
       <size>
@@ -190,7 +270,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0" colspan="6">
+   <item row="4" column="0" colspan="9">
     <widget class="QTableView" name="tblShow">
      <property name="minimumSize">
       <size>
@@ -200,7 +280,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="6">
+   <item row="4" column="9">
     <spacer name="horizontalSpacer_5">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -213,7 +293,7 @@
      </property>
     </spacer>
    </item>
-   <item row="3" column="2">
+   <item row="5" column="3">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Vertical</enum>

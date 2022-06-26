@@ -31,5 +31,6 @@ private slots:
 
     void on_pbtnShow_clicked();
 
+    void on_pbtnCompute_clicked();
 };
 #endif // MAINWINDOW_H

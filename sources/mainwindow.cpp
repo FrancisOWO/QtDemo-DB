@@ -53,3 +53,16 @@ void MainWindow::on_pbtnShow_clicked()
     //查看数据库表
     openWinDB(table);
 }
+
+void MainWindow::on_pbtnCompute_clicked()
+{
+    int total = ui->spinTotal->value();
+    double price = ui->dspinPrice->value();
+
+    double tprice = total * price;
+    qDebug() << tprice;
+
+    QString str = QString::number(tprice);
+
+    ui->ptxtResult->setPlainText(str);
+}

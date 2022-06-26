@@ -80,6 +80,12 @@ int Database::dbConnect()
     model = new QSqlTableModel(this, db);   //获取数据库模型
     ui->tblShow->setModel(model);           //绑定数据库模型到Qt表
     model->setTable(tableName);             //选择数据库表
+
+
+    //int d_no = 3;
+    //if("students1" == tableName)
+    //    model->setFilter("d_no = 3");
+
     model->select();                        //查询数据库表
 
     //数据更新方式：手动提交
@@ -176,4 +182,39 @@ void Database::exportTable()
 void Database::importTable()
 {
 
+}
+
+void Database::on_pbtnSelect_clicked()
+{
+    QString item = ui->ptxtItem->toPlainText();
+    QString value = ui->ptxtValue->toPlainText();
+
+    //int dvalue;
+    //if(tableName == "students1" && item == "d_no")
+    //    dvalue = value.toInt();
+
+    QString queryStr = "SELECT * FROM " + tableName
+            + " WHERE " + item + " = " + value;
+
+    QSqlQuery query(queryStr, model->database());
+    while(query.next())
+        qDebug() << query.value(0).toString() << query.value(1).toString();
+
+    //WHERE d_no = 3
+    //WHERE gender = 'Male'
+    QString strFilter = item + " = " + value;
+    model->setFilter(strFilter);
+
+    int ok = model->select();
+    if(!ok){
+        QMessageBox::critical(this, CStr2LocalQStr("查询错误"), model->lastError().text());
+        model->setFilter("");
+        model->select();
+    }
+}
+
+void Database::on_pbtnDefault_clicked()
+{
+    model->setFilter("");
+    model->select();
 }

@@ -61,6 +61,8 @@ private slots:
     void exportTable();
     void importTable();
 
+    void on_pbtnSelect_clicked();
+    void on_pbtnDefault_clicked();
 };
 
 #endif // DATABASE_H
