@@ -50,10 +50,13 @@ private:
     int importFromExcel(QSqlDatabase &dbExcel);
 
 private slots:
-    void dbAddRec();
-    void dbDelRec();
+    //信号槽可以用默认的关联，或手动关联
+    //1.默认关联：on_{ui对象名}_{动作}
+    void on_pbtnAdd_clicked();
+    void on_pbtnDel_clicked();
+    //2.需要手动关联
     void dbUndo();
-    void dbSave();
+    void dbSubmit();
 
     void exportTable();
     void importTable();

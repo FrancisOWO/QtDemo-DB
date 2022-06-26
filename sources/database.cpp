@@ -3,11 +3,20 @@
 
 #include <QDebug>
 
+//字符串编码转换
+QString CStr2LocalQStr(const char *str)
+{
+    return QString::fromUtf8(str);
+}
+
 Database::Database(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Database)
 {
     ui->setupUi(this);
+
+    InitMembers();
+    InitConnections();
 }
 
 Database::~Database()
@@ -29,7 +38,8 @@ void Database::InitMembers()
 //关联信号与槽
 void Database::InitConnections()
 {
-
+    connect(ui->pbtnUndo, SIGNAL(clicked()), this, SLOT(dbUndo()));     //撤销修改
+    connect(ui->pbtnSave, SIGNAL(clicked()), this, SLOT(dbSubmit()));   //保存修改
 }
 
 //连接数据库
@@ -54,7 +64,7 @@ int Database::dbConnect()
     //打开数据库
     if(db.open() == false) {
         //打开失败，弹窗错误信息
-        QMessageBox::warning(this, "warning", db.lastError().text());
+        QMessageBox::critical(this, "连接失败", db.lastError().text());
         return -1;
     }
 
@@ -75,8 +85,9 @@ int Database::dbConnect()
     //数据更新方式：手动提交
     model->setEditStrategy(QSqlTableModel::OnManualSubmit);
 
-    //隐藏不需要显示的列
-    ui->tblShow->setColumnHidden(0,true);
+    //隐藏不需要显示的列（比如自增主键）
+    if("depts1" == tableName || "courses1" == tableName)
+        ui->tblShow->setColumnHidden(0,true);
 
     return 0;
 }
@@ -102,27 +113,57 @@ int Database::importFromExcel(QSqlDatabase &dbExcel)
 }
 
 //添加记录
-void Database::dbAddRec()
+void Database::on_pbtnAdd_clicked()
 {
+    //在表格最下方新增一行
+    int n = model->rowCount();
+    model->insertRow(n);
 
+    //隐藏了自增主键列的表，需要手动添加id
+    if("depts1" == tableName || "courses1" == tableName){
+        //若已存在记录，则取最后的id加1作为新id
+        int pre_id = 1;
+        if (n > 0) pre_id = model->data(model->index(n-1,0)).toInt();
+        model->setData(model->index(n, 0), pre_id+1);   //设置id
+    }
 }
 
 //删除记录
-void Database::dbDelRec()
+void Database::on_pbtnDel_clicked()
 {
-
+    //删除当前选中的行
+    int cur = ui->tblShow->currentIndex().row();
+    model->removeRow(cur);
 }
 
 //撤销修改
 void Database::dbUndo()
 {
-
+    model->revertAll();     //撤销
+    model->select();        //刷新model
 }
 
-//保存修改
-void Database::dbSave()
+//保存修改（手动提交）
+void Database::dbSubmit()
 {
+    //弹窗询问：是否确定要将修改写入数据库
+    QMessageBox box(QMessageBox::Question, CStr2LocalQStr("保存"),
+                    CStr2LocalQStr("确定要保存修改到数据库？"),
+                    QMessageBox::Yes | QMessageBox::No);
+    //修改--快捷键Y，取消--快捷键N
+    box.setButtonText(QMessageBox::Yes, CStr2LocalQStr("修改(&Y)"));
+    box.setButtonText(QMessageBox::No, CStr2LocalQStr("取消(&N)"));
+    int ret = box.exec();
+    //选择"修改"
+    if(QMessageBox::Yes == ret){
+        int ok = model->submitAll();    //手动提交修改
+        if(!ok) //提交失败
+            QMessageBox::critical(this, CStr2LocalQStr("保存失败"), model->lastError().text());
+        else    //提交成功
+            QMessageBox::information(this, CStr2LocalQStr("提示"), CStr2LocalQStr("保存成功!"));
 
+        model->select();        //刷新model
+    }
 }
 
 //导出数据库表
